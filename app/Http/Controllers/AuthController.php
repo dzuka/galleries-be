@@ -48,3 +48,4 @@ class AuthController extends Controller
         return response()->json(['success'=> false, 'error'=> "Verification code is invalid."]);
 
     }
+
