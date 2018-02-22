@@ -11,7 +11,12 @@ class GalleriesController extends Controller
      */
     public function index()
     {
-        return Gallery::all();
+        $term = request()->input('term');
+        if ($term) {
+            return Gallery::search($term);
+        } else {
+            return Gallery::all();
+        }
     }
     /**
      * Show the form for creating a new resource.
@@ -30,7 +35,8 @@ class GalleriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //MovieRequest
+        return Gallery::create($request->all());
     }
     /**
      * Display the specified resource.
@@ -40,7 +46,7 @@ class GalleriesController extends Controller
      */
     public function show($id)
     {
-        //
+        return Gallery::findOrFail($id);
     }
     /**
      * Show the form for editing the specified resource.
@@ -61,7 +67,9 @@ class GalleriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $gallery = Gallery::findOrFail($id);
+        $gallery->update($request->all());
+        return $gallery;
     }
     /**
      * Remove the specified resource from storage.
@@ -71,6 +79,6 @@ class GalleriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Gallery::destroy($id);
     }
 }
